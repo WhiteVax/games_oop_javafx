@@ -1,6 +1,7 @@
 package ru.job4j.chess.figures.black;
 
 import org.junit.Test;
+import ru.job4j.chess.ImpossibleMoveException;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.black.BishopBlack;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,5 +26,15 @@ public class BishopBlackTest {
         BishopBlack bishopBlack = new BishopBlack(Cell.C1);
         Cell[] expected = new Cell[] {Cell.D2, Cell.E3, Cell.F4, Cell.G5};
         assertThat(bishopBlack.way(Cell.G5), is(expected));
+    }
+
+    @Test
+    public void whenWayIsNotDiagonal()  {
+        try {
+            BishopBlack bishopBlack = new BishopBlack(Cell.C1);
+            bishopBlack.way(Cell.C2);
+        } catch (ImpossibleMoveException e) {
+            assertThat(e.getMessage(), is("Could not move by diagonal from C1 to C2"));
+        }
     }
 }
